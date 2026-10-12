@@ -1,6 +1,11 @@
-# 📋 GitHub Issues — All-in-One Sport Chatbot
-> Copy-paste tiap task ini langsung ke GitHub Issues  
-> **Tim:** Kevin (Admin) · Teman 1 · Teman 2  
+# 📋 GitHub Issues — All-in-One Sport Chatbot (PHP & Groq API)
+
+> **Repository:** `kevinRYOJ/chatboot`  
+> **Tech Stack:** PHP (Native Modern) + Groq API (`llama-3.3-70b-versatile` / `llama-3.1-8b-instant`)  
+> **Tim:**  
+> - 👑 Kevin (`kevinRYOJ`) — Project Manager & Lead Backend  
+> - 👤 Fernanda (`fernanda-hensem`) — Frontend & Feature Developer  
+> - 👤 Rico (`ricozack97`) — Prompt Engineer & QA  
 > **Total:** 22 Task | 4 Milestone | 3 Anggota
 
 ---
@@ -9,190 +14,105 @@
 
 ---
 
-## TASK-01 · Inisialisasi Repository GitHub
-**Assignee:** Kevin | **Label:** `setup` `admin` | **Status:** Backlog
+## TASK-01 · Inisialisasi Repository GitHub & Keamanan
+**Assignee:** `kevinRYOJ` | **Label:** `setup`, `admin` | **Milestone:** Milestone 1 | **Status:** Done
 
 ### 📝 Deskripsi
-Membuat repository GitHub sebagai pusat kolaborasi tim untuk proyek All-in-One Sport Chatbot.
+Membuat repository GitHub sebagai pusat kolaborasi tim, mengatur branch develop, branch protection di branch `main`, dan CI/CD awal.
 
 ### ✅ Acceptance Criteria
-- [ ] Repository `sport-chatbot` sudah ada di GitHub
-- [ ] Branch `main` dan `develop` sudah dibuat
-- [ ] File `README.md`, `.gitignore`, `LICENSE` sudah ada
-- [ ] Teman 1 dan Teman 2 sudah bisa push ke repo
-
-### 📌 Langkah-langkah
-1. Buka https://github.com/new
-2. Repository name: `sport-chatbot`
-3. Visibility: **Public**
-4. Centang: ✅ Add a README file
-5. Add .gitignore: pilih **Python**
-6. License: **MIT License**
-7. Klik **Create repository**
-8. Di tab **Settings → Collaborators**, undang Teman 1 & Teman 2
-9. Buat branch `develop`:
-   ```bash
-   git checkout -b develop
-   git push origin develop
-   ```
-
-### 📎 Catatan
-- Semua development dilakukan di branch `develop`
-- Merge ke `main` hanya saat milestone selesai
+- [x] Repository `chatboot` sudah dibuat di GitHub
+- [x] Branch `main` dan `develop` sudah aktif
+- [x] File `.gitignore`, `.env.example`, dan `README.md` sudah ada
+- [x] Branch protection rule di `main` sudah aktif
+- [x] Fernanda (`fernanda-hensem`) dan Rico (`ricozack97`) sudah diundang sebagai Collaborator
 
 ---
 
 ## TASK-02 · Setup GitHub Project Board
-**Assignee:** Kevin | **Label:** `setup` `admin` | **Status:** Backlog
+**Assignee:** `kevinRYOJ` | **Label:** `setup`, `admin` | **Milestone:** Milestone 1 | **Status:** In Progress
 
 ### 📝 Deskripsi
-Mengatur GitHub Projects agar tim bisa tracking progress secara visual.
+Mengatur papan Kanban di GitHub Projects agar tim bisa melacak progres pekerjaan secara transparan.
 
 ### ✅ Acceptance Criteria
-- [ ] Board punya kolom: Backlog / Ready / In Progress / In Review / Done
+- [ ] Kolom board tersusun: Backlog / Ready / In Progress / In Review / Done
+- [ ] 4 Milestone sudah dibuat (M1 s/d M4) dengan due date
 - [ ] Semua 22 task sudah masuk ke board
-- [ ] Setiap task sudah ada: assignee, label, milestone
-- [ ] 4 Milestone sudah dibuat dengan deadline
-
-### 📌 Langkah-langkah
-1. Buka tab **Projects** di repository
-2. Klik **New Project** → pilih **Board**
-3. Buat kolom: 🟢 Backlog → 🔵 Ready → 🟡 In Progress → 🟠 In Review → ✅ Done
-4. Buat 4 Milestone di **Issues → Milestones**:
-   - M1: Setup & Persiapan (due: Minggu 1)
-   - M2: Core Features (due: Minggu 2)
-   - M3: Eksperimen Prompt (due: Minggu 3)
-   - M4: Testing & Deploy (due: Minggu 4)
-5. Tambahkan semua task dari dokumen ini sebagai Issues
+- [ ] Setiap task memiliki Assignee, Labels, Priority, dan Milestone
 
 ---
 
-## TASK-03 · Buat Struktur Folder Proyek
-**Assignee:** Kevin | **Label:** `setup` | **Status:** Backlog
+## TASK-03 · Buat Struktur Folder Proyek PHP
+**Assignee:** `kevinRYOJ` | **Label:** `setup` | **Milestone:** Milestone 1 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Menyiapkan struktur folder standar agar semua anggota tim bekerja di tempat yang sama.
+Menyiapkan struktur folder standar PHP agar modular, rapi, dan mudah dikembangkan bersama.
 
 ### ✅ Acceptance Criteria
-- [ ] Semua folder sudah ada di repository
-- [ ] File placeholder (`.gitkeep`) ada di folder kosong
-- [ ] Struktur sudah di-push ke branch `develop`
+- [ ] Folder `api/`, `config/`, `assets/css/`, `assets/js/`, `docs/`, `experiments/` sudah tersedia
+- [ ] File konfigurasi `config/config.php` dan `config/prompts.php` sudah disiapkan
+- [ ] Struktur folder sudah di-push ke branch `develop`
 
-### 📌 Langkah-langkah
-```bash
-git clone https://github.com/kevinRYOJ/sport-chatbot.git
-cd sport-chatbot
-git checkout develop
-
-mkdir docs experiments experiments/hasil assets
-
-echo "" > app.py
-echo "GEMINI_API_KEY=your_api_key_here" > .env.example
-touch experiments/hasil/.gitkeep
-touch assets/.gitkeep
-
-git add .
-git commit -m "feat: initialize project structure"
-git push origin develop
+### 🗂️ Struktur yang Dibuat
 ```
-
-### 🗂️ Hasil Akhir Struktur
-```
-sport-chatbot/
-├── app.py
+chatboot/
 ├── .env.example
-├── .env                    ← JANGAN di-push! Ada di .gitignore
-├── requirements.txt
+├── .gitignore
+├── index.php
 ├── README.md
+├── api/
+│   └── chat.php
+├── config/
+│   ├── config.php
+│   └── prompts.php
+├── assets/
+│   ├── css/style.css
+│   └── js/app.js
 ├── docs/
-│   ├── arsitektur.md
-│   ├── prompt-engineering-ref.md
-│   └── GITHUB_ISSUES.md
-├── experiments/
-│   ├── TEMPLATE_EKSPERIMEN.md
-│   └── hasil/
-│       ├── workout-prompt-test.md
-│       ├── nutrisi-prompt-test.md
-│       ├── info-prompt-test.md
-│       └── analisis-final.md
-└── assets/
+└── experiments/
+    └── hasil/
 ```
 
 ---
 
-## TASK-04 · Dokumentasi Arsitektur Sistem
-**Assignee:** Kevin | **Label:** `documentation` | **Status:** Backlog
+## TASK-04 · Dokumentasi Arsitektur Sistem (PHP + Groq API)
+**Assignee:** `kevinRYOJ` | **Label:** `documentation` | **Milestone:** Milestone 1 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Membuat dokumentasi arsitektur yang bisa dipahami siapapun yang ingin mereplikasi proyek ini.
+Membuat dokumen arsitektur alur sistem komunikasi antara browser client, server PHP, dan Groq AI Cloud.
 
 ### ✅ Acceptance Criteria
-- [ ] File `docs/arsitektur.md` sudah lengkap
-- [ ] Terdapat diagram alur sistem
-- [ ] Semua komponen dijelaskan dengan bahasa sederhana
-
-### 📎 Catatan
-Lihat file `docs/arsitektur.md` yang sudah disediakan sebagai template.
+- [ ] File `docs/arsitektur.md` menjelaskan alur client-server
+- [ ] Diagram alur: User (Browser) → AJAX `fetch()` → `api/chat.php` → cURL Groq API → JSON response
+- [ ] Penjelasan 3 mode utama (Workout, Nutrisi, Info Olahraga)
 
 ---
 
-## TASK-05 · Setup Environment & Dependencies
-**Assignee:** Teman 1 | **Label:** `setup` | **Status:** Backlog
+## TASK-05 · Setup Environment PHP & Konfigurasi API Key
+**Assignee:** `fernanda-hensem` | **Label:** `setup` | **Milestone:** Milestone 1 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Menyiapkan semua library yang dibutuhkan dan memastikan environment berjalan di semua komputer.
+Menyiapkan environment lokal PHP dan memastikan ekstensi cURL serta JSON aktif untuk memanggil Groq API.
 
 ### ✅ Acceptance Criteria
-- [ ] File `requirements.txt` sudah ada dan lengkap
-- [ ] File `.env.example` sudah ada
-- [ ] Sudah di-test install di komputer lokal
-- [ ] Tidak ada error saat jalankan `streamlit run app.py`
-
-### 📌 Langkah-langkah
-1. Buat `requirements.txt`:
-```
-streamlit>=1.28.0
-google-generativeai>=0.3.1
-python-dotenv>=1.0.0
-```
-
-2. Test install:
-```bash
-pip install -r requirements.txt
-```
-
-3. Pastikan `.env` ada di `.gitignore`:
-```
-.env
-__pycache__/
-*.pyc
-```
-
-### ⚠️ Penting
-> Jangan pernah push file `.env` ke GitHub! API key harus tetap rahasia.
+- [ ] PHP versi 8.0+ berjalan di komputer lokal (XAMPP / Laragon / PHP CLI)
+- [ ] Ekstensi `curl` dan `json` aktif
+- [ ] File `.env` lokal berhasil dibuat dari `.env.example`
+- [ ] API Key Groq sudah terpasang dan siap digunakan
 
 ---
 
 ## TASK-06 · Riset & Kumpulkan Referensi Prompt Engineering
-**Assignee:** Teman 2 | **Label:** `research` | **Status:** Backlog
+**Assignee:** `ricozack97` | **Label:** `research` | **Milestone:** Milestone 1 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Memahami 5 teknik prompt engineering yang akan dieksperimenkan di Milestone 3.
+Mempelajari 5 teknik prompt engineering yang akan diuji coba pada Milestone 3.
 
 ### ✅ Acceptance Criteria
-- [ ] 5 teknik prompting sudah dipahami dan dirangkum
-- [ ] File `docs/prompt-engineering-ref.md` sudah dibuat
-- [ ] Minimal 1 contoh prompt olahraga untuk tiap teknik
-
-### 📌 5 Teknik yang Dipelajari
-
-| Teknik | Deskripsi | Contoh Olahraga |
-|--------|-----------|-----------------|
-| Zero-shot | Langsung tanya tanpa contoh | "Jelaskan cara squat yang benar." |
-| Negative | Tambahkan larangan/batasan | "Jelaskan diet atlet. Jangan sebut suplemen berbayar." |
-| Action-oriented | Mulai dengan kata kerja aktif | "Buat program latihan 30 hari untuk pemula." |
-| Chain of Thought | Minta AI berpikir step-by-step | "Pikirkan langkah demi langkah: analisis kondisi user, lalu..." |
-| Few-shot | Berikan 2-3 contoh sebelum pertanyaan | "Q: Program pemula? A:[contoh]. Q: Program lanjut?" |
+- [ ] 5 teknik dipahami: Zero-shot, Negative, Action-oriented, Chain of Thought (CoT), Few-shot
+- [ ] File `docs/prompt-engineering-ref.md` dibuat dengan contoh kasus olahraga
+- [ ] Disediakan minimal 1 contoh prompt untuk tiap teknik
 
 ---
 
@@ -200,134 +120,85 @@ Memahami 5 teknik prompt engineering yang akan dieksperimenkan di Milestone 3.
 
 ---
 
-## TASK-07 · Buat Main App & UI Layout (Streamlit)
-**Assignee:** Kevin | **Label:** `feature` `frontend` | **Status:** Backlog
+## TASK-07 · Buat User Interface Chatbot (HTML, CSS, JS)
+**Assignee:** `fernanda-hensem` | **Label:** `feature`, `frontend` | **Milestone:** Milestone 2 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Membuat tampilan utama chatbot menggunakan Streamlit.
+Membuat tampilan web chat interaktif yang modern, responsif, dan mudah digunakan di `index.php`.
 
 ### ✅ Acceptance Criteria
-- [ ] App bisa dijalankan dengan `streamlit run app.py`
-- [ ] Ada sidebar dengan pilihan 3 mode
-- [ ] Ada area chat yang menampilkan history percakapan
-- [ ] Ada tombol Reset Chat
-- [ ] Tampilan rapi dan mudah digunakan
-
-### 📎 Catatan
-Lihat file `app.py` yang sudah disediakan sebagai starter code.
+- [ ] Header judul "🏋️ Sport AI Chatbot"
+- [ ] Sidebar pilihan mode: Workout & Latihan, Nutrisi & Diet, Info Olahraga
+- [ ] Area chat menampilkan riwayat percakapan user dan bot
+- [ ] Input chat tidak me-reload halaman (menggunakan AJAX `fetch()` di `assets/js/app.js`)
+- [ ] Tombol Reset Chat untuk menghapus riwayat pesan
 
 ---
 
-## TASK-08 · Integrasi Gemini API
-**Assignee:** Kevin | **Label:** `feature` `backend` | **Status:** Backlog
+## TASK-08 · Integrasi Groq API dengan PHP cURL
+**Assignee:** `kevinRYOJ` | **Label:** `feature`, `backend` | **Milestone:** Milestone 2 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Menghubungkan app Streamlit dengan Gemini API sehingga chatbot bisa menjawab pertanyaan.
+Membangun endpoint backend `api/chat.php` yang menerima pesan dari frontend dan meneruskannya ke Groq API menggunakan cURL.
 
 ### ✅ Acceptance Criteria
-- [ ] Chatbot bisa menjawab pertanyaan dari user
-- [ ] Setiap mode punya persona berbeda
-- [ ] History percakapan terkirim ke Gemini (kontekstual)
-- [ ] Error handling jika API key salah
-
-### 📌 Cara Dapat API Key Gratis
-1. Buka https://aistudio.google.com
-2. Login dengan akun Google
-3. Klik **Get API Key → Create API Key**
-4. Paste ke file `.env`: `GEMINI_API_KEY=AIza...`
+- [ ] Endpoint `api/chat.php` menerima request POST JSON `{ message, mode, history }`
+- [ ] Mengirim request ke `https://api.groq.com/openai/v1/chat/completions` menggunakan cURL
+- [ ] Menggunakan model `llama-3.3-70b-versatile` atau `llama-3.1-8b-instant`
+- [ ] Mengembalikan respons JSON `{ reply: "...", status: "success" }`
+- [ ] Menangani error jika API Key tidak valid atau koneksi terputus
 
 ---
 
 ## TASK-09 · Buat & Test System Prompt — Mode Workout
-**Assignee:** Teman 1 | **Label:** `feature` `prompt` | **Status:** Backlog
+**Assignee:** `fernanda-hensem` | **Label:** `feature`, `prompt` | **Milestone:** Milestone 2 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Membuat dan mengoptimalkan system prompt untuk mode Workout.
+Menyusun system prompt persona Personal Trainer profesional di `config/prompts.php` dan mengujinya.
 
 ### ✅ Acceptance Criteria
-- [ ] System prompt sudah dibuat
-- [ ] Diuji dengan 5 pertanyaan berbeda
-- [ ] Jawaban relevan, aman, dan memotivasi
-- [ ] Hasil test didokumentasikan di `experiments/hasil/workout-prompt-test.md`
-
-### 📌 5 Pertanyaan untuk Testing
-1. "Aku mau sixpack, harus mulai dari mana?"
-2. "Workout apa yang cocok untuk pemula yang mau turun 10kg?"
-3. "Aku tidak punya gym, bisa olahraga di rumah?"
-4. "Berapa kali seminggu sebaiknya olahraga untuk pemula?"
-5. "Otot saya sering nyeri setelah latihan, normal tidak?"
+- [ ] System prompt mode Workout dibuat dengan instruksi keselamatan dan kustomisasi level kebugaran
+- [ ] Diuji dengan minimal 5 pertanyaan workout yang bervariasi
+- [ ] Hasil pengujian dicatat di `experiments/hasil/workout-prompt-test.md`
 
 ---
 
 ## TASK-10 · Buat & Test System Prompt — Mode Nutrisi
-**Assignee:** Teman 1 | **Label:** `feature` `prompt` | **Status:** Backlog
+**Assignee:** `fernanda-hensem` | **Label:** `feature`, `prompt` | **Milestone:** Milestone 2 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Membuat system prompt untuk mode Nutrisi agar chatbot bisa memberikan saran gizi akurat.
+Menyusun system prompt persona Ahli Gizi Olahraga untuk perhitungan kalori, BMR/TDEE, dan meal plan.
 
 ### ✅ Acceptance Criteria
-- [ ] System prompt sudah dibuat
-- [ ] Bisa menghitung kalori (BMR/TDEE)
-- [ ] Diuji dengan 5 pertanyaan berbeda
-- [ ] Hasil test di `experiments/hasil/nutrisi-prompt-test.md`
-
-### 📌 5 Pertanyaan untuk Testing
-1. "Aku 70kg, 170cm, 22 tahun. Berapa kalori per hari?"
-2. "Makanan apa yang bagus dimakan sebelum olahraga?"
-3. "Aku vegetarian tapi mau bangun otot, bisa tidak?"
-4. "Apa itu defisit kalori dan gimana caranya?"
-5. "Berapa gram protein per hari untuk muscle gain?"
+- [ ] System prompt mode Nutrisi dibuat dengan batasan ilmiah dan tidak menyarankan obat terlarang
+- [ ] Diuji dengan minimal 5 pertanyaan terkait kalori & pola makan
+- [ ] Hasil pengujian dicatat di `experiments/hasil/nutrisi-prompt-test.md`
 
 ---
 
 ## TASK-11 · Buat & Test System Prompt — Mode Info Olahraga
-**Assignee:** Teman 2 | **Label:** `feature` `prompt` | **Status:** Backlog
+**Assignee:** `ricozack97` | **Label:** `feature`, `prompt` | **Milestone:** Milestone 2 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Membuat system prompt untuk mode Info Olahraga yang fokus pada informasi dan motivasi.
+Menyusun system prompt persona Komentator & Analis Olahraga Indonesia yang antusias dan memotivasi.
 
 ### ✅ Acceptance Criteria
-- [ ] System prompt sudah dibuat
-- [ ] Fokus pada olahraga populer Indonesia
-- [ ] Diuji dengan 5 pertanyaan berbeda
-- [ ] Hasil test di `experiments/hasil/info-prompt-test.md`
-
-### 📌 5 Pertanyaan untuk Testing
-1. "Teknik dasar apa yang harus dikuasai pemain bulu tangkis pemula?"
-2. "Apa perbedaan formasi 4-3-3 dan 4-4-2 dalam sepak bola?"
-3. "Aku ingin mulai olahraga tapi tidak tahu pilih yang mana, rekomendasikan!"
-4. "Bagaimana cara meningkatkan mental sebelum pertandingan?"
-5. "Siapa atlet Indonesia yang bisa jadi inspirasi untuk generasi muda?"
+- [ ] System prompt mencakup aturan olahraga, teknik dasar, dan motivasi atlet nasional
+- [ ] Diuji dengan minimal 5 pertanyaan seputar olahraga populer (sepak bola, bulu tangkis, basket)
+- [ ] Hasil pengujian dicatat di `experiments/hasil/info-prompt-test.md`
 
 ---
 
 ## TASK-12 · Buat Template Eksperimen Google Sheets
-**Assignee:** Teman 2 | **Label:** `experiment` `documentation` | **Status:** Backlog
+**Assignee:** `ricozack97` | **Label:** `experiment`, `documentation` | **Milestone:** Milestone 2 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Membuat template Google Sheets untuk mencatat semua hasil eksperimen prompt engineering.
+Membuat spreadsheet Google Sheets untuk mendokumentasikan data uji eksperimen prompt engineering tim.
 
 ### ✅ Acceptance Criteria
-- [ ] Google Sheets sudah dibuat dan bisa diakses tim
-- [ ] Semua kolom sudah ada dan diberi warna
-- [ ] Contoh data sudah diisi di 1 baris
-- [ ] Link Sheets sudah dishare ke Kevin dan Teman 1
-- [ ] Link disimpan di README.md
-
-### 📌 Struktur Kolom Google Sheets
-
-| Kolom | Nama | Keterangan |
-|-------|------|-----------|
-| A | Prompt | Teks prompt yang diujikan |
-| B | Nomor Kombinasi | 1 / 1.2 / 2 / 2.2 / 3 / 3.2 / 4 / 4.2 / 5 |
-| C | Jenis Prompt Engineering | Zero-shot / Negative / Action-oriented / CoT |
-| D | Jumlah Token Input | Estimasi: jumlah kata × 1.3 |
-| E | Jumlah Token Output | Estimasi: jumlah kata jawaban × 1.3 |
-| F | Deskripsi Kualitas Hasil | Sangat Baik / Baik / Cukup / Kurang + alasan |
-| G | Assignee | Kevin / Teman 1 / Teman 2 |
-| H | Mode Chatbot | Workout / Nutrisi / Info |
-
-**Warna baris:** 🟦 Kevin · 🟩 Teman 1 · 🟨 Teman 2
+- [ ] Kolom lengkap: Prompt, Nomor Kombinasi, Teknik Prompting, Token Input, Token Output, Deskripsi Kualitas, Tester, Mode
+- [ ] Diberikan format warna pembeda per anggota tim
+- [ ] Tautan spreadsheet dibagikan ke seluruh anggota dan dicantumkan di README.md
 
 ---
 
@@ -336,214 +207,144 @@ Membuat template Google Sheets untuk mencatat semua hasil eksperimen prompt engi
 ---
 
 ## TASK-13 · Eksperimen Kombinasi 1 & 1.2 (Zero-shot)
-**Assignee:** Kevin | **Label:** `experiment` | **Status:** Backlog
+**Assignee:** `kevinRYOJ` | **Label:** `experiment` | **Milestone:** Milestone 3 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Menguji kombinasi Task description + Zero-shot / Negative prompting pada mode Workout.
+Menguji kombinasi Task description + Zero-shot dan Negative prompting pada mode Workout.
 
 ### ✅ Acceptance Criteria
-- [ ] 2 prompt sudah dijalankan di chatbot
-- [ ] Token input & output sudah dihitung
-- [ ] Hasil sudah dicatat di Google Sheets
-- [ ] Evaluasi kualitas sudah ditulis
-- [ ] Perbandingan Kombinasi 1 vs 1.2 sudah dibuat
-
-### 📌 Lihat detail prompt di `experiments/TEMPLATE_EKSPERIMEN.md` bagian Kombinasi 1 & 1.2
+- [ ] Kombinasi 1 (Zero-shot standar) dijalankan dan diukur token serta kualitasnya
+- [ ] Kombinasi 1.2 (Zero-shot + batasan alat gym mahal / suplemen) dijalankan
+- [ ] Data dicatat ke Google Sheets dan dianalisis perbedaannya
 
 ---
 
-## TASK-14 · Eksperimen Kombinasi 4 & 4.2 (Action-oriented + Format)
-**Assignee:** Kevin | **Label:** `experiment` | **Status:** Backlog
+## TASK-14 · Eksperimen Kombinasi 4 & 4.2 (Action-oriented & Format)
+**Assignee:** `kevinRYOJ` | **Label:** `experiment` | **Milestone:** Milestone 3 | **Status:** Backlog
+
+### 📝 Deskripsi
+Menguji efektivitas persona, action-oriented, dan format keluaran berupa tabel pada program latihan 4 minggu.
 
 ### ✅ Acceptance Criteria
-- [ ] 2 prompt sudah dijalankan
-- [ ] Evaluasi apakah format tabel berhasil diikuti Gemini
-- [ ] Evaluasi apakah negative prompting mengubah isi jawaban
-- [ ] Hasil dicatat di Google Sheets
-
-### 📌 Lihat detail prompt di `experiments/TEMPLATE_EKSPERIMEN.md` bagian Kombinasi 4 & 4.2
+- [ ] Kombinasi 4 (Format tabel terstruktur) diuji
+- [ ] Kombinasi 4.2 (Format tabel + batasan latihan berisiko cedera) diuji
+- [ ] Evaluasi kerapian format output dan kepatuhan model LLaMA terhadap batasan
 
 ---
 
-## TASK-15 · Eksperimen Kombinasi 2 & 2.2 (Action-oriented)
-**Assignee:** Teman 1 | **Label:** `experiment` | **Status:** Backlog
+## TASK-15 · Eksperimen Kombinasi 2 & 2.2 (Action-oriented & Constraint)
+**Assignee:** `fernanda-hensem` | **Label:** `experiment` | **Milestone:** Milestone 3 | **Status:** Backlog
+
+### 📝 Deskripsi
+Menguji perhitungan kalori dan menu makanan menggunakan teknik action-oriented dengan batasan menu lokal Indonesia.
 
 ### ✅ Acceptance Criteria
-- [ ] 2 prompt sudah dijalankan pada mode Nutrisi
-- [ ] Evaluasi akurasi perhitungan kalori
-- [ ] Evaluasi apakah constraint "makanan Indonesia" berhasil
-- [ ] Hasil dicatat di Google Sheets
-
-### 📌 Lihat detail prompt di `experiments/TEMPLATE_EKSPERIMEN.md` bagian Kombinasi 2 & 2.2
+- [ ] Kombinasi 2 (Perhitungan kalori langsung) dijalankan dan diverifikasi akurasi matematisnya
+- [ ] Kombinasi 2.2 (Constraint: bahan makanan lokal Indonesia & tanpa suplemen mahal) dijalankan
+- [ ] Data dicatat ke Google Sheets
 
 ---
 
-## TASK-16 · Eksperimen Kombinasi 3 & 3.2 (Persona + Zero-shot)
-**Assignee:** Teman 1 | **Label:** `experiment` | **Status:** Backlog
+## TASK-16 · Eksperimen Kombinasi 3 & 3.2 (Persona & Scope)
+**Assignee:** `fernanda-hensem` | **Label:** `experiment` | **Milestone:** Milestone 3 | **Status:** Backlog
+
+### 📝 Deskripsi
+Menguji peran Persona Pelatih Bulu Tangkis Nasional dengan dan tanpa negative prompting (membatasi strategi tim).
 
 ### ✅ Acceptance Criteria
-- [ ] 2 prompt sudah dijalankan pada mode Info Olahraga
-- [ ] Evaluasi apakah persona mengubah gaya bahasa jawaban
-- [ ] Evaluasi apakah negative prompting berhasil batasi topik
-- [ ] Hasil dicatat di Google Sheets
-
-### 📌 Lihat detail prompt di `experiments/TEMPLATE_EKSPERIMEN.md` bagian Kombinasi 3 & 3.2
+- [ ] Kombinasi 3 (Persona pelatih nasional) diuji gaya bahasanya
+- [ ] Kombinasi 3.2 (Persona + larangan membahas permainan ganda) diuji fokus bahasannya
+- [ ] Data dicatat ke Google Sheets
 
 ---
 
 ## TASK-17 · Eksperimen Kombinasi 5 — Chain of Thought (CoT)
-**Assignee:** Teman 2 | **Label:** `experiment` | **Status:** Backlog
+**Assignee:** `ricozack97` | **Label:** `experiment` | **Milestone:** Milestone 3 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Chain of Thought adalah teknik meminta AI berpikir langkah demi langkah. Ini biasanya menghasilkan jawaban paling komprehensif tapi menggunakan token paling banyak.
+Menguji teknik penalaran bertahap (Chain of Thought / CoT) pada kasus konsultasi nutrisi & penurunan berat badan kompleks.
 
 ### ✅ Acceptance Criteria
-- [ ] Prompt CoT sudah dijalankan pada mode Nutrisi
-- [ ] Bandingkan dengan hasil Zero-shot dari TASK-13
-- [ ] Hitung selisih token output CoT vs Zero-shot
-- [ ] Evaluasi: apakah kualitas CoT sebanding dengan tokennya?
-- [ ] Hasil dicatat di Google Sheets
-
-### 📌 Lihat detail prompt di `experiments/TEMPLATE_EKSPERIMEN.md` bagian Kombinasi 5
+- [ ] Prompt CoT 5 langkah (analisis, defisit kalori, meal plan, olahraga, timeline) dijalankan
+- [ ] Dibandingkan penggunaan token dan kedalaman jawaban terhadap Zero-shot (TASK-13)
+- [ ] Data dicatat ke Google Sheets
 
 ---
 
-## TASK-18 · Rekap & Analisis Hasil Eksperimen
-**Assignee:** Teman 2 | **Label:** `experiment` `documentation` | **Status:** Backlog
+## TASK-18 · Rekap & Analisis Akhir Hasil Eksperimen
+**Assignee:** `ricozack97` | **Label:** `experiment`, `documentation` | **Milestone:** Milestone 3 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Menganalisis semua hasil eksperimen dan memberikan rekomendasi prompt terbaik untuk setiap mode.
+Menganalisis seluruh data dari Google Sheets dan menyusun laporan kesimpulan eksperimen prompt engineering.
 
 ### ✅ Acceptance Criteria
-- [ ] Semua data dari Google Sheets sudah terkumpul
-- [ ] Ada tabel perbandingan semua kombinasi
-- [ ] Ada rekomendasi prompt terbaik per mode chatbot
-- [ ] File `experiments/hasil/analisis-final.md` sudah diisi lengkap
-
-### 📌 Lihat template di `experiments/hasil/analisis-final.md`
+- [ ] Tabel rangkuman seluruh 9 kombinasi tersaji lengkap
+- [ ] Analisis efisiensi token vs kualitas jawaban dirumuskan
+- [ ] Rekomendasi formulasi prompt terbaik untuk tiap mode dituangkan di `experiments/hasil/analisis-final.md`
 
 ---
 
-# 🏁 MILESTONE 4 — Testing, Finalisasi & Dokumentasi
+# 🏁 MILESTONE 4 — Testing, Finalisasi & Deployment
 
 ---
 
-## TASK-19 · Integrasi System Prompt Terbaik ke App
-**Assignee:** Kevin | **Label:** `feature` `integration` | **Status:** Backlog
+## TASK-19 · Integrasi Prompt Optimal ke Konfigurasi PHP
+**Assignee:** `kevinRYOJ` | **Label:** `feature`, `integration` | **Milestone:** Milestone 4 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Menggunakan hasil eksperimen (TASK-18) untuk upgrade system prompt di `app.py`.
+Mengadopsi kombinasi prompt terbaik dari hasil analisis (TASK-18) ke dalam `config/prompts.php`.
 
 ### ✅ Acceptance Criteria
-- [ ] System prompt di `app.py` sudah diperbarui berdasarkan hasil eksperimen
-- [ ] Semua 3 mode berjalan dengan prompt optimal
-- [ ] Di-test end-to-end, tidak ada error
-- [ ] Commit: `feat: integrate optimized prompts from experiments`
+- [ ] `config/prompts.php` diperbarui dengan prompt hasil optimasi
+- [ ] Chatbot diuji secara live dengan konfigurasi prompt baru
+- [ ] Respons bot terbukti lebih akurat dan terstruktur
 
 ---
 
-## TASK-20 · User Acceptance Testing (UAT)
-**Assignee:** Kevin | **Label:** `testing` | **Status:** Backlog
+## TASK-20 · User Acceptance Testing (UAT 30 Skenario)
+**Assignee:** `kevinRYOJ` | **Label:** `testing` | **Milestone:** Milestone 4 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Melakukan pengujian menyeluruh 30 skenario sebelum app di-deploy.
+Melakukan pengujian mutu sistem dengan 30 skenario berbeda (10 skenario per mode).
 
 ### ✅ Acceptance Criteria
-- [ ] 10 skenario test per mode dijalankan (30 total)
-- [ ] Semua bug dilaporkan sebagai GitHub Issues
-- [ ] Semua bug critical diperbaiki sebelum deploy
-
-### 📌 Skenario Test (per mode, lakukan untuk Workout/Nutrisi/Info)
-1. Pertanyaan umum/normal
-2. Minta program/rekomendasi spesifik
-3. Tanya hal yang tidak relevan (uji ketahanan)
-4. Bahasa campur Indonesia-Inggris
-5. Pertanyaan sangat panjang (>100 kata)
-6. Pertanyaan sangat pendek (1-2 kata)
-7. Reset chat, lanjut percakapan baru
-8. Ganti mode di tengah percakapan
-9. Pertanyaan follow-up (uji konteks/memori)
-10. Input karakter aneh atau simbol
-
-### 📌 Format Laporan Bug (buat sebagai GitHub Issue baru)
-```
-Judul: [BUG] deskripsi singkat
-Mode: Workout / Nutrisi / Info
-Langkah reproduksi:
-  1. ...
-  2. ...
-Hasil yang diharapkan: ...
-Hasil yang terjadi: ...
-Screenshot: [jika ada]
-Severity: Critical / Major / Minor
-```
+- [ ] 10 skenario mode Workout, 10 skenario mode Nutrisi, 10 skenario mode Info dijalankan
+- [ ] Bug atau keanehan respons dicatat sebagai Issue baru di GitHub
+- [ ] Tidak ada bug kritis sebelum proyek siap dipresentasikan
 
 ---
 
-## TASK-21 · Finalisasi README.md
-**Assignee:** Teman 1 | **Label:** `documentation` | **Status:** Backlog
+## TASK-21 · Finalisasi Dokumentasi README.md Proyek
+**Assignee:** `fernanda-hensem` | **Label:** `documentation` | **Milestone:** Milestone 4 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Membuat README final yang lengkap agar siapapun bisa mereplikasi proyek ini.
+Menyempurnakan dokumentasi proyek agar orang lain dapat mereplikasi aplikasi ini dengan mudah.
 
 ### ✅ Acceptance Criteria
-- [ ] README bisa dipahami orang yang belum kenal proyek ini
-- [ ] Ada instruksi instalasi yang jelas dan bisa diikuti
-- [ ] Ada screenshot tampilan chatbot
-- [ ] Ada link ke Google Sheets eksperimen
-- [ ] Ada kredit tim
-
-### 📎 Catatan
-Update file `README.md` yang sudah ada dengan konten final.
+- [ ] Deskripsi proyek dan screenshot aplikasi terpasang
+- [ ] Panduan instalasi lokal jelas (`git clone`, konfigurasi `.env`, jalankan `php -S localhost:8000`)
+- [ ] Tautan ke Google Sheets eksperimen tertera
+- [ ] Daftar kontributor tim lengkap
 
 ---
 
-## TASK-22 · Deploy ke Streamlit Cloud
-**Assignee:** Teman 2 | **Label:** `deployment` | **Status:** Backlog
+## TASK-22 · Deployment Web Chatbot PHP
+**Assignee:** `ricozack97` | **Label:** `deployment` | **Milestone:** Milestone 4 | **Status:** Backlog
 
 ### 📝 Deskripsi
-Men-deploy aplikasi ke Streamlit Cloud agar bisa diakses publik.
+Men-deploy aplikasi PHP ke platform online agar bisa diakses publik via browser tanpa instalasi lokal.
 
 ### ✅ Acceptance Criteria
-- [ ] App live dan bisa diakses via URL publik
-- [ ] API Key di-set di Streamlit Secrets (bukan hardcode)
-- [ ] URL deploy ditambahkan ke README.md
-- [ ] App berjalan normal di cloud tanpa error
-
-### 📌 Langkah Deploy
-1. Pastikan semua kode sudah di branch `main`
-2. Buka https://share.streamlit.io → Login GitHub
-3. **New app** → pilih repo `sport-chatbot`, branch `main`, file `app.py`
-4. **Advanced settings → Secrets**:
-   ```toml
-   GEMINI_API_KEY = "AIza..."
-   ```
-5. Klik **Deploy!** → tunggu live → copy URL ke README.md
-
-### ⚠️ Penting
-> JANGAN hardcode API key di `app.py`. Selalu gunakan Streamlit Secrets.
+- [ ] Aplikasi live di hosting (misal: InfinityFree / Render / Railway / cPanel)
+- [ ] API Key Groq terkonfigurasi dengan aman di environment hosting
+- [ ] URL live ditambahkan ke `README.md` dan siap dipresentasikan
 
 ---
 
-## 📊 Ringkasan
+## 📊 Ringkasan Pembagian Tugas
 
-| Anggota | Task | Total |
-|---------|------|-------|
-| 👑 Kevin | 01, 02, 03, 04, 07, 08, 13, 14, 19, 20 | 10 task |
-| 👤 Teman 1 | 05, 09, 10, 15, 16, 21 | 6 task |
-| 👤 Teman 2 | 06, 11, 12, 17, 18, 22 | 6 task |
-| **TOTAL** | | **22 task** |
-
-### Label GitHub
-
-| Label | Hex | Keterangan |
-|-------|-----|-----------|
-| `setup` | `#0075ca` | Task persiapan awal |
-| `feature` | `#0e8a16` | Pengembangan fitur |
-| `experiment` | `#e4e669` | Eksperimen prompt |
-| `documentation` | `#cfd3d7` | Penulisan dokumentasi |
-| `testing` | `#d93f0b` | Testing & QA |
-| `deployment` | `#6f42c1` | Deploy aplikasi |
-| `admin` | `#333333` | Khusus admin |
-| `research` | `#54aeff` | Riset & referensi |
-| `prompt` | `#f9d0c4` | Pembuatan prompt |
+| Anggota Tim | Username GitHub | Tanggung Jawab Utama | Total Task |
+|---|---|---|---|
+| **Kevin** (Admin) | `kevinRYOJ` | Project Management, Backend API cURL, Prompt Exp 1 & 4, UAT | **10 task** (01, 02, 03, 04, 08, 13, 14, 19, 20) |
+| **Fernanda** | `fernanda-hensem` | Frontend UI (HTML/CSS/JS), Prompt Exp 2 & 3, README | **6 task** (05, 07, 09, 10, 15, 16, 21) |
+| **Rico** | `ricozack97` | Prompt Ref, Exp CoT, Analisis Data Sheets, Deployment | **6 task** (06, 11, 12, 17, 18, 22) |
