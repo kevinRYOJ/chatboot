@@ -51,3 +51,9 @@ Tool-based prompting, Zero-shot prompting, Action-oriented prompting, Negative p
 input 3000	
 output 658 
 Deskripsi Kualitas Hasil : Akurasi Data Eksternal Tinggi. Informasi sangat kaya akan detail operasional. Kemampuan tool-based meminimalkan potensi halusinasi bawaan dari zero-shot, sementara negative prompting memastikan data yang diambil dari luar tetap difilter agar sesuai dengan batasan pengguna.
+
+Task 10
+Chain of thought (CoT) prompting;4 A dengan 1 B
+input 3147
+output 833
+Deskripsi Kualitas Hasil : Sangat Kontekstual & Terstruktur. Penggunaan Chain of Thought (CoT) dengan konteks spesifik pengguna (mahasiswa penyusun proposal skripsi yang memiliki riwayat bersepeda 5 km) menghasilkan penalaran logis yang mendalam. Model mampu memetakan hubungan antara kebiasaan duduk lama dan kapasitas fisik pengguna, lalu menyajikannya secara terstruktur dalam format daftar periksa (checklist) yang aplikatif.
