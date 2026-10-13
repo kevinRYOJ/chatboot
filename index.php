@@ -74,8 +74,8 @@ $modelName = htmlspecialchars($config['groq_model']);
             </button>
 
             <div class="system-badge">
-                <span><span class="status-dot"></span>Groq AI Online</span>
-                <strong>LLaMA 3.3</strong>
+                <span><span class="status-dot"></span>Gemini AI Online</span>
+                <strong>Flash 1.5</strong>
             </div>
         </div>
     </aside>

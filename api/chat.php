@@ -1,7 +1,7 @@
 <?php
 /**
  * API Chat Endpoint
- * Menerima request chat dari frontend dan meneruskannya ke Groq Cloud API
+ * Menerima request chat dari frontend dan meneruskannya ke Google Gemini API
  */
 
 header('Content-Type: application/json; charset=UTF-8');
@@ -21,13 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $config = require dirname(__DIR__) . '/config/config.php';
 require_once dirname(__DIR__) . '/config/prompts.php';
 
-// Cek apakah API Key sudah diisi
-$apiKey = trim($config['groq_api_key'] ?? '');
-if (empty($apiKey) || $apiKey === 'gsk_your_groq_api_key_here') {
+// Cek apakah API Key Gemini sudah diisi
+$apiKey = trim($config['gemini_api_key'] ?? '');
+if (empty($apiKey) || strpos($apiKey, 'your_') !== false || $apiKey === 'AIza_your_gemini_api_key_here') {
     http_response_code(400);
     echo json_encode([
         'status'  => 'error',
-        'message' => 'GROQ_API_KEY belum dikonfigurasi di file .env! Silakan buka file .env dan masukkan API Key dari https://console.groq.com/keys'
+        'message' => 'GEMINI_API_KEY belum dikonfigurasi di file .env! Silakan buka file .env dan masukkan API Key dari Google AI Studio (https://aistudio.google.com)'
     ]);
     exit;
 }
@@ -58,101 +58,127 @@ if (empty($userMessage)) {
     exit;
 }
 
-// Siapkan system prompt berdasarkan mode yang dipilih
+// Ambil system prompt berdasarkan mode yang dipilih
 $systemPrompt = getSystemPrompt($mode);
 
-// Bangun struktur percakapan (OpenAI/Groq compatible)
-$messages = [
-    [
-        'role'    => 'system',
-        'content' => $systemPrompt
-    ]
-];
+// Bangun struktur contents untuk Gemini API
+$contents = [];
 
-// Masukkan riwayat percakapan sebelumnya jika ada (maksimal 10 pesan terakhir untuk efisiensi token)
+// Masukkan riwayat percakapan sebelumnya (role: 'user' atau 'model')
 $recentHistory = array_slice($history, -10);
 foreach ($recentHistory as $chatItem) {
     if (isset($chatItem['role']) && isset($chatItem['content'])) {
-        $role = ($chatItem['role'] === 'user') ? 'user' : 'assistant';
-        $messages[] = [
-            'role'    => $role,
-            'content' => (string) $chatItem['content']
+        $role = ($chatItem['role'] === 'user') ? 'user' : 'model';
+        $contents[] = [
+            'role'  => $role,
+            'parts' => [
+                ['text' => (string) $chatItem['content']]
+            ]
         ];
     }
 }
 
 // Tambahkan pesan user saat ini
-$messages[] = [
-    'role'    => 'user',
-    'content' => $userMessage
+$contents[] = [
+    'role'  => 'user',
+    'parts' => [
+        ['text' => $userMessage]
+    ]
 ];
 
-// Siapkan payload request ke Groq API
+// Siapkan payload Gemini API
 $payload = [
-    'model'       => $config['groq_model'],
-    'messages'    => $messages,
-    'temperature' => (float) $config['temperature'],
-    'max_tokens'  => (int) $config['max_tokens']
+    'system_instruction' => [
+        'parts' => [
+            ['text' => $systemPrompt]
+        ]
+    ],
+    'contents' => $contents,
+    'generationConfig' => [
+        'temperature'     => (float) $config['temperature'],
+        'maxOutputTokens' => (int) $config['max_tokens']
+    ]
 ];
 
-// Kirim request menggunakan cURL
-$ch = curl_init($config['groq_api_url']);
-curl_setopt_array($ch, [
-    CURLOPT_POST           => true,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_TIMEOUT        => 30,
-    CURLOPT_HTTPHEADER     => [
-        'Content-Type: application/json',
-        'Authorization: Bearer ' . $apiKey
-    ],
-    CURLOPT_POSTFIELDS     => json_encode($payload)
-]);
+// Fungsi cURL ke Gemini API
+function callGeminiApi($model, $apiKey, $payload) {
+    $endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key=" . urlencode($apiKey);
 
-$responseBody = curl_exec($ch);
-$httpCode     = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$curlError    = curl_error($ch);
-curl_close($ch);
+    $ch = curl_init($endpoint);
+    curl_setopt_array($ch, [
+        CURLOPT_POST           => true,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT        => 35,
+        CURLOPT_HTTPHEADER     => [
+            'Content-Type: application/json'
+        ],
+        CURLOPT_POSTFIELDS     => json_encode($payload)
+    ]);
 
-// Tangani kemungkinan error cURL
-if ($responseBody === false) {
+    $responseBody = curl_exec($ch);
+    $httpCode     = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError    = curl_error($ch);
+    curl_close($ch);
+
+    return [$responseBody, $httpCode, $curlError];
+}
+
+// Ambil daftar kandidat model yang akan dicoba berurutan
+$modelsToTry = !empty($config['gemini_models']) ? $config['gemini_models'] : ['gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-2.0-flash', 'gemini-1.5-pro'];
+
+$successfulResponse = null;
+$successfulModel = null;
+$lastErrorMsg = 'Tidak ada model yang berhasil dihubungi.';
+$attemptedModels = [];
+
+// Loop mencoba setiap model jika model sebelumnya kehabisan kuota atau error
+foreach ($modelsToTry as $candidateModel) {
+    $candidateModel = trim($candidateModel);
+    if (empty($candidateModel)) continue;
+    $attemptedModels[] = $candidateModel;
+
+    list($responseBody, $httpCode, $curlError) = callGeminiApi($candidateModel, $apiKey, $payload);
+
+    if ($responseBody === false) {
+        $lastErrorMsg = "cURL error pada {$candidateModel}: " . $curlError;
+        continue;
+    }
+
+    $decodedResponse = json_decode($responseBody, true);
+
+    // Jika model berhasil mengembalikan teks jawaban
+    if ($httpCode === 200 && !isset($decodedResponse['error']) && !empty($decodedResponse['candidates'][0]['content']['parts'][0]['text'])) {
+        $successfulResponse = $decodedResponse;
+        $successfulModel    = $candidateModel;
+        break; // Berhasil! Keluar dari loop fallback
+    }
+
+    // Catat pesan error (kuota habis/429/404) dan otomatis coba model berikutnya
+    $lastErrorMsg = $decodedResponse['error']['message'] ?? "HTTP {$httpCode} pada model {$candidateModel}";
+}
+
+// Jika seluruh model dalam daftar gagal
+if (!$successfulResponse) {
     http_response_code(500);
     echo json_encode([
         'status'  => 'error',
-        'message' => 'Gagal menghubungi Groq API: ' . $curlError
+        'message' => "Seluruh model (" . implode(', ', $attemptedModels) . ") tidak dapat diakses atau kuota habis. Error terakhir: " . $lastErrorMsg
     ]);
     exit;
 }
 
-$decodedResponse = json_decode($responseBody, true);
-
-// Tangani error respons dari server Groq
-if ($httpCode !== 200 || isset($decodedResponse['error'])) {
-    $errorMsg = $decodedResponse['error']['message'] ?? 'Terjadi kesalahan pada Groq API (Kode HTTP: ' . $httpCode . ')';
-    http_response_code($httpCode >= 400 && $httpCode < 600 ? $httpCode : 500);
-    echo json_encode([
-        'status'  => 'error',
-        'message' => $errorMsg,
-        'details' => $decodedResponse['error'] ?? null
-    ]);
-    exit;
-}
-
-// Ambil teks balasan AI & data penggunaan token
-$replyContent = $decodedResponse['choices'][0]['message']['content'] ?? '';
-$usageData    = $decodedResponse['usage'] ?? [
-    'prompt_tokens'     => 0,
-    'completion_tokens' => 0,
-    'total_tokens'      => 0
-];
+// Ambil teks jawaban dari model yang berhasil
+$replyContent = $successfulResponse['candidates'][0]['content']['parts'][0]['text'] ?? '';
+$usageMeta    = $successfulResponse['usageMetadata'] ?? [];
 
 echo json_encode([
     'status'  => 'success',
     'reply'   => $replyContent,
     'usage'   => [
-        'prompt_tokens'     => $usageData['prompt_tokens'] ?? 0,
-        'completion_tokens' => $usageData['completion_tokens'] ?? 0,
-        'total_tokens'      => $usageData['total_tokens'] ?? 0
+        'prompt_tokens'     => $usageMeta['promptTokenCount'] ?? 0,
+        'completion_tokens' => $usageMeta['candidatesTokenCount'] ?? 0,
+        'total_tokens'      => $usageMeta['totalTokenCount'] ?? 0
     ],
     'mode'    => $mode,
-    'model'   => $config['groq_model']
+    'model'   => $successfulModel
 ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

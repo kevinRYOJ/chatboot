@@ -50,13 +50,22 @@ function env($key, $default = null) {
     return $val;
 }
 
+// Parse daftar model Gemini (fallback berurutan)
+$modelsRaw = env('GEMINI_MODELS', env('GEMINI_MODEL', 'gemini-1.5-flash, gemini-1.5-flash-8b, gemini-2.0-flash, gemini-1.5-pro'));
+$modelsList = array_values(array_filter(array_map('trim', explode(',', $modelsRaw))));
+
+// Parse API Keys jika user memasukkan lebih dari satu key (dipisah koma)
+$apiKeysRaw = env('GEMINI_API_KEYS', env('GEMINI_API_KEY', ''));
+$apiKeysList = array_values(array_filter(array_map('trim', explode(',', $apiKeysRaw))));
+
 // Array konfigurasi utama
 return [
-    'app_name'     => env('APP_NAME', 'All-in-One Sport Chatbot'),
-    'app_env'      => env('APP_ENV', 'development'),
-    'groq_api_key' => env('GROQ_API_KEY', ''),
-    'groq_model'   => env('GROQ_MODEL', 'llama-3.3-70b-versatile'),
-    'groq_api_url' => 'https://api.groq.com/openai/v1/chat/completions',
-    'max_tokens'   => 1500,
-    'temperature'  => 0.7,
+    'app_name'       => env('APP_NAME', 'All-in-One Sport Chatbot'),
+    'app_env'        => env('APP_ENV', 'development'),
+    'gemini_api_key' => $apiKeysList[0] ?? '',
+    'gemini_api_keys'=> $apiKeysList,
+    'gemini_model'   => $modelsList[0] ?? 'gemini-1.5-flash',
+    'gemini_models'  => $modelsList,
+    'max_tokens'     => 1500,
+    'temperature'    => 0.7,
 ];

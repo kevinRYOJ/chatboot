@@ -1,7 +1,7 @@
-# 🏋️ All-in-One Sport Chatbot (PHP & Groq API)
+# 🏋️ All-in-One Sport Chatbot (PHP & Google Gemini API)
 
 > Aplikasi Chatbot Olahraga cerdas berbasis AI untuk panduan Workout, Nutrisi atlet, dan Informasi Dunia Olahraga.  
-> Didukung oleh **Groq Cloud API** dengan model **LLaMA 3.3 70B** berkecepatan tinggi dan limit gratis harian yang besar.
+> Didukung oleh **Google Gemini API** (`gemini-1.5-flash`) yang sangat natural dalam berbahasa Indonesia, cepat, dan memiliki free tier gratis dari Google.
 
 ---
 
@@ -21,16 +21,16 @@
 - **PHP** versi 8.0 atau lebih baru (dengan ekstensi `curl` dan `json` aktif).
 - Bisa dijalankan menggunakan **PHP CLI Built-in Server**, **XAMPP**, atau **Laragon**.
 
-### 2. Dapatkan API Key Gratis dari Groq
-1. Buka [console.groq.com/keys](https://console.groq.com/keys)
-2. Login menggunakan akun Google / GitHub kamu (Gratis tanpa kartu kredit).
-3. Klik tombol **Create API Key**, lalu salin kuncinya (format: `gsk_...`).
+### 2. Dapatkan API Key Gratis dari Google Gemini
+1. Buka [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
+2. Login menggunakan akun Google kamu.
+3. Klik tombol **Create API Key**, lalu salin kuncinya (format: `AIza...`).
 
 ### 3. Konfigurasi File `.env`
 Buka file `.env` di folder proyek dan tempel API Key kamu:
 ```ini
-GROQ_API_KEY=gsk_paste_api_key_kamu_di_sini
-GROQ_MODEL=llama-3.3-70b-versatile
+GEMINI_API_KEY=AIzaSy_paste_api_key_kamu_di_sini
+GEMINI_MODEL=gemini-1.5-flash
 ```
 
 ### 4. Jalankan Aplikasi di Browser
@@ -43,9 +43,9 @@ php -S localhost:8000
 Buka browser dan akses:  
 👉 **`http://localhost:8000`**
 
-#### Cara Menggunakan XAMPP:
-1. Pastikan folder proyek berada di dalam folder `htdocs`, misal: `C:\xampp\htdocs\chatboot`.
-2. Nyalakan modul **Apache** di XAMPP Control Panel.
+#### Cara Menggunakan XAMPP / Laragon:
+1. Pastikan folder proyek berada di dalam folder server web (`htdocs` atau `www`).
+2. Nyalakan modul **Apache**.
 3. Buka browser dan akses:  
 👉 **`http://localhost/chatboot`**
 
@@ -56,13 +56,13 @@ Buka browser dan akses:
 ```text
 chatboot/
 ├── index.php                 # Halaman utama aplikasi (UI Chatbot)
-├── .env                      # File konfigurasi rahasia (API Key Groq)
+├── .env                      # File konfigurasi rahasia (API Key Gemini)
 ├── .env.example              # Template contoh konfigurasi untuk GitHub
 ├── .gitignore                # Mencegah file .env bocor ke Git
 ├── README.md                 # Dokumentasi panduan proyek
 │
 ├── api/
-│   └── chat.php              # Backend API cURL yang memanggil Groq Cloud
+│   └── chat.php              # Backend API cURL yang memanggil Google Gemini Cloud
 │
 ├── config/
 │   ├── config.php            # Loader file .env & konfigurasi umum
