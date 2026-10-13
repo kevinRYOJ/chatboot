@@ -51,3 +51,9 @@ Chain of thought (CoT) prompting, Negative prompting
 Input 4417
 Output 815
 Deskripsi Kualitas Hasil
+
+Task 10 
+Zero-shot prompting, Negative prompting
+Input 
+Output
+Deskripsi Kualitas Hasil
