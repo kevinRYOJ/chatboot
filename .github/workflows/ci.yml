@@ -1,0 +1,57 @@
+name: CI / CD Pipeline - Sport Chatbot
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  lint-and-validate:
+    name: Code Linting & Syntax Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🐘 Setup PHP Environment
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: curl, json, mbstring
+          coverage: none
+
+      - name: 🔍 Check PHP Syntax (Syntax Lint)
+        run: |
+          echo "Memeriksa sintaks seluruh file PHP..."
+          shopt -s globstar nullglob
+          php_files=(**/*.php)
+          if [ ${#php_files[@]} -gt 0 ]; then
+            for file in "${php_files[@]}"; do
+              php -l "$file" || exit 1
+            done
+            echo "✅ Semua file PHP valid!"
+          else
+            echo "ℹ️ Belum ada file .php untuk diperiksa, melanjutkan..."
+          fi
+
+      - name: 🔒 Security Check (No Leaked Secrets)
+        run: |
+          echo "Memeriksa agar file .env tidak ter-commit ke repository..."
+          if git ls-files --error-unmatch .env 2>/dev/null; then
+            echo "❌ ERROR: File .env terdeteksi di git! Hapus segera untuk keamanan API Key!"
+            exit 1
+          fi
+          echo "✅ Keamanan aman: .env tidak terlacak di git."
+
+      - name: 📋 Check Required Files
+        run: |
+          test -f README.md || (echo "❌ README.md tidak ditemukan" && exit 1)
+          test -f .gitignore || (echo "❌ .gitignore tidak ditemukan" && exit 1)
+          test -f .env.example || (echo "❌ .env.example tidak ditemukan" && exit 1)
+          echo "✅ Semua file dasar proyek lengkap!"
