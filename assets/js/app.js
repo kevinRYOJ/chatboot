@@ -224,8 +224,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(data.message || 'Gagal memproses pesan.');
             }
 
+            // Update badge model jika ada
+            if (data.model) {
+                const modelTagEl = document.querySelector('.model-tag strong');
+                if (modelTagEl) modelTagEl.textContent = data.model;
+            }
+
             // Tampilkan balasan bot
-            appendMessage('assistant', data.reply, data.usage);
+            appendMessage('assistant', data.reply, data.usage, data.model);
 
             // Simpan ke riwayat lokal
             chatHistory.push({ role: 'user', content: userText });
@@ -243,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ---------------- Helper Render Chat Bubble ----------------
-    function appendMessage(role, content, usage = null) {
+    function appendMessage(role, content, usage = null, modelUsed = null) {
         const row = document.createElement('div');
         row.className = `message-row ${role}`;
 
@@ -270,8 +276,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const tokenMeta = document.createElement('div');
             tokenMeta.className = 'token-meta';
             tokenMeta.innerHTML = `
-                <span>📥 Input: <strong>${usage.prompt_tokens}</strong> tok</span>
-                <span>📤 Output: <strong>${usage.completion_tokens}</strong> tok</span>
+                ${modelUsed ? `<span>🤖 <strong>${escapeHTML(modelUsed)}</strong></span>` : ''}
+                <span>📥 In: <strong>${usage.prompt_tokens}</strong> tok</span>
+                <span>📤 Out: <strong>${usage.completion_tokens}</strong> tok</span>
                 <span>📊 Total: <strong>${usage.total_tokens}</strong></span>
             `;
             bubbleWrap.appendChild(tokenMeta);
