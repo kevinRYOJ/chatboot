@@ -1,0 +1,59 @@
+Task 1
+Chain of thought (CoT) prompting, Negative prompting;4 A dengan 2 B
+input 291
+output 831 
+Deskripsi Kualitas Hasil : Sangat Terstruktur & Logis. Penggunaan CoT memaksa model memecah proses penalaran secara bertahap, menghasilkan rasionalisasi yang kuat (tercermin dari output 831 token) sebelum memberikan jawaban akhir. Negative prompting berhasil membatasi halusinasi atau rekomendasi yang tidak aman.
+
+Task 2
+Tree of Thought (ToT) prompting;5 A dengan 1 B
+input 1202
+output 817
+Deskripsi Kualitas Hasil : Komprehensif & Eksploratif. Model berhasil mensimulasikan pencabangan logika dengan memikirkan beberapa alternatif sekaligus sebelum memilih yang terbaik. Proses ini meningkatkan kualitas pengambilan keputusan AI dan menghasilkan rekomendasi yang sangat relevan dengan konteks.
+
+Task 3
+Tree of Thought (ToT) prompting, Negative prompting;5 A dengan 2 B
+input 2109
+output  903
+Deskripsi Kualitas Hasil : Akurasi & Presisi Maksimal. Dengan token input yang sangat besar (2109), model mampu memproses konteks yang kompleks. Kombinasi eksplorasi multi-cabang (ToT) dan batasan ketat (negative prompting) menghasilkan evaluasi mendalam yang sepenuhnya patuh pada constraints yang diberikan pengguna. 
+
+Task 4
+Single-shot prompting, Negative prompting ;2 B dengan 1 A	
+input 3063	
+output 549
+Deskripsi Kualitas Hasil : Konsisten namun Kaku. Single-shot berhasil memaksa model meniru format contoh dengan baik (terlihat dari output yang efisien di 549 token). Batasan terpenuhi, namun variasi dan kreativitas konten cenderung repetitif karena hanya bergantung pada satu pola referensi.
+
+Task 5
+Single-shot prompting, Negative prompting ;2 B dengan 2 A	
+input 3671	
+output 645
+Deskripsi Kualitas Hasil : Peningkatan Konsistensi Format. Adanya tambahan parameter (2 A) membuat kepatuhan terhadap format menstrukturkan data menjadi lebih stabil. Model mematuhi instruksi negative prompting dengan baik dan menghasilkan struktur output yang lebih mudah dibaca.
+
+Task 6
+Few-shot prompting, Action-oriented prompting, Negative prompting;3 B dengan 1 A
+input 4391	
+output 398
+Deskripsi Kualitas Hasil : Sangat Efisien & Terarah. Tingginya token input (4391) akibat referensi few-shot diimbangi dengan output yang sangat ringkas (398 token). Action-oriented prompting membuat model langsung berfokus pada eksekusi (to-the-point) tanpa filler words atau basa-basi.
+
+Task 7
+Few-shot prompting, Action-oriented prompting, Negative prompting;3 B dengan 2 A
+input 3956	
+output 256
+Deskripsi Kualitas Hasil : Padat & Tepat Sasaran. Kombinasi instruksi langsung (action-oriented) dan contoh berlapis (few-shot) menghasilkan efisiensi output tertinggi (hanya 256 token). Model mereplikasi format dengan efisiensi tinggi, sementara negative prompting menjaga keamanan parameter secara ketat.
+
+Task 8
+Tool-based prompting, Zero-shot prompting, Action-oriented prompting, Negative prompting;4 B dengan 1 A
+input 3368	
+output 549 
+Deskripsi Kualitas Hasil : Faktual & Dinamis. Penggunaan tool-based (pencarian eksternal) berhasil menutupi kelemahan ketiadaan contoh (zero-shot). Hasilnya sangat up-to-date. Action-oriented mengarahkan model untuk menyusun informasi hasil pencarian menjadi panduan praktis yang siap pakai.
+
+Task 9
+Tool-based prompting, Zero-shot prompting, Action-oriented prompting, Negative prompting;4 B dengan 2 A
+input 3000	
+output 658 
+Deskripsi Kualitas Hasil : Akurasi Data Eksternal Tinggi. Informasi sangat kaya akan detail operasional. Kemampuan tool-based meminimalkan potensi halusinasi bawaan dari zero-shot, sementara negative prompting memastikan data yang diambil dari luar tetap difilter agar sesuai dengan batasan pengguna.
+
+Task 10
+Chain of thought (CoT) prompting;4 A dengan 1 B
+input 3147
+output 833
+Deskripsi Kualitas Hasil : Sangat Kontekstual & Terstruktur. Penggunaan Chain of Thought (CoT) dengan konteks spesifik pengguna (mahasiswa penyusun proposal skripsi yang memiliki riwayat bersepeda 5 km) menghasilkan penalaran logis yang mendalam. Model mampu memetakan hubungan antara kebiasaan duduk lama dan kapasitas fisik pengguna, lalu menyajikannya secara terstruktur dalam format daftar periksa (checklist) yang aplikatif.
