@@ -1,0 +1,53 @@
+Task 1
+Zero-shot prompting, Single-shot prompting, Few-shot prompting, Action-oriented prompting, Negative prompting dengan kombinasi 5B dengan 2A
+Input 267
+Output 649
+Deskripsi Kualitas Hasil
+
+Task 2 
+Tool-based prompting, Action-oriented prompting, Negative prompting, Chain of thought (CoT) prompting, Zero-shot prompting, Single-shot prompting dengan kombinasi 6B dan 1A
+Input 956
+Output 742
+Deskripsi Kualitas Hasil
+
+Task 3 
+Tool-based prompting, Action-oriented prompting, Negative prompting, Chain of thought (CoT) prompting, Zero-shot prompting, Single-shot prompting kombinasi 6B dengan 2A
+Input 1748
+Output 706 
+Deskripsi Kualitas Hasil
+
+Task 4 
+Zero-shot prompting, Single-shot prompting, Few-shot prompting, Tool-based prompting, Action-oriented prompting, Negative prompting, Chain of thought (CoT) prompting kombinasi 7B dengan 1A
+Input 3245
+Output 675
+Deskripsi Kualitas Hasil
+
+Task 5 
+Zero-shot prompting, Single-shot prompting, Few-shot prompting, Action-oriented prompting, Negative prompting
+Input 3957
+Output 780 
+Deskripsi Kualitas Hasil
+
+Task 6
+Zero-shot prompting, Single-shot prompting, Few-shot prompting, Tool-based prompting, Action-oriented prompting, Negative prompting, Chain of thought (CoT) prompting, Tree of thought (ToT) prompting kombinasi 8B dengan 1A
+Input 4108
+Output 779
+Deskripsi Kualitas Hasil 
+
+Task 7
+Chain of thought (CoT) prompting
+Input 4160
+Output 769
+Deskripsi Kualitas Hasil
+
+Task 8
+Zero-shot prompting, Single-shot prompting, Few-shot prompting, Tool-based prompting, Action-oriented prompting, Negative prompting, Chain of thought (CoT) prompting, Tree of thought (ToT) prompting 
+Input 4226
+Output 874
+Deskripsi Kualitas Hasil 
+
+Task 9
+Chain of thought (CoT) prompting, Negative prompting
+Input 4417
+Output 815
+Deskripsi Kualitas Hasil
