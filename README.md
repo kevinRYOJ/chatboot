@@ -1,85 +1,95 @@
-# 🏋️ Sport AI Chatbot
+# 🏋️ All-in-One Sport Chatbot (PHP & Groq API)
 
-> Chatbot olahraga berbasis AI powered by Google Gemini.  
-> Membantu workout, nutrisi, dan info olahraga dalam satu aplikasi.
-
----
-
-## ✨ Fitur
-- 💪 **Mode Workout** — Program latihan & tips gym personal
-- 🍎 **Mode Nutrisi** — Hitung kalori, meal plan, diet olahraga
-- ⚽ **Mode Info Olahraga** — Teknik, motivasi, info cabang olahraga
+> Aplikasi Chatbot Olahraga cerdas berbasis AI untuk panduan Workout, Nutrisi atlet, dan Informasi Dunia Olahraga.  
+> Didukung oleh **Groq Cloud API** dengan model **LLaMA 3.3 70B** berkecepatan tinggi dan limit gratis harian yang besar.
 
 ---
 
-## 🚀 Cara Install & Jalankan
+## ✨ Fitur Utama
 
-### 1. Clone Repository
-```bash
-git clone https://github.com/kevinRYOJ/sport-chatbot.git
-cd sport-chatbot
-```
-
-### 2. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Setup API Key
-```bash
-cp .env.example .env
-```
-Edit file `.env`, isi `GEMINI_API_KEY` dengan API key kamu.  
-Dapatkan API Key **gratis** di: https://aistudio.google.com/
-
-### 4. Jalankan App
-```bash
-streamlit run app.py
-```
+- 💪 **Mode Workout & Latihan:** Rekomendasi program latihan kebugaran, kalistenik, gym, repetisi, dan koreksi form gerakan aman (Persona: Personal Trainer bersertifikat NASM-CPT).
+- 🍎 **Mode Nutrisi & Diet:** Kalkulasi kalori harian (BMR & TDEE), target protein, meal plan lokal terjangkau, dan strategi hidrasi (Persona: Ahli Gizi Olahraga CSSD).
+- ⚽ **Mode Info Olahraga:** Analisis taktik pertandingan, aturan resmi cabang olahraga populer, wawasan sejarah, dan motivasi atlet (Persona: Komentator & Analis Olahraga).
+- 📊 **Pelacak Penggunaan Token Terintegrasi:** Setiap balasan AI menampilkan jumlah **Token Input** dan **Token Output**, mempermudah pencatatan data pada tabel eksperimen tugas.
+- 💬 **Antarmuka Modern & Responsif:** Desain modern, cepat tanpa refresh halaman (AJAX Fetch), dan mendukung tampilan HP maupun Laptop.
 
 ---
 
-## 🧪 Eksperimen Prompt Engineering
-Link Google Sheets: [akan diisi setelah TASK-12]
+## 🚀 Panduan Menjalankan Aplikasi
 
-Lihat dokumentasi eksperimen di:
-- `experiments/TEMPLATE_EKSPERIMEN.md` — Panduan & semua prompt
-- `experiments/hasil/` — Hasil test tiap mode
-- `experiments/hasil/analisis-final.md` — Analisis & rekomendasi
+### 1. Prasyarat
+- **PHP** versi 8.0 atau lebih baru (dengan ekstensi `curl` dan `json` aktif).
+- Bisa dijalankan menggunakan **PHP CLI Built-in Server**, **XAMPP**, atau **Laragon**.
+
+### 2. Dapatkan API Key Gratis dari Groq
+1. Buka [console.groq.com/keys](https://console.groq.com/keys)
+2. Login menggunakan akun Google / GitHub kamu (Gratis tanpa kartu kredit).
+3. Klik tombol **Create API Key**, lalu salin kuncinya (format: `gsk_...`).
+
+### 3. Konfigurasi File `.env`
+Buka file `.env` di folder proyek dan tempel API Key kamu:
+```ini
+GROQ_API_KEY=gsk_paste_api_key_kamu_di_sini
+GROQ_MODEL=llama-3.3-70b-versatile
+```
+
+### 4. Jalankan Aplikasi di Browser
+
+#### Cara Cepat (Terminal / VSCode):
+Jalankan perintah berikut di terminal:
+```bash
+php -S localhost:8000
+```
+Buka browser dan akses:  
+👉 **`http://localhost:8000`**
+
+#### Cara Menggunakan XAMPP:
+1. Pastikan folder proyek berada di dalam folder `htdocs`, misal: `C:\xampp\htdocs\chatboot`.
+2. Nyalakan modul **Apache** di XAMPP Control Panel.
+3. Buka browser dan akses:  
+👉 **`http://localhost/chatboot`**
 
 ---
 
-## 📁 Struktur Proyek
-```
-sport-chatbot/
-├── app.py                        ← File utama chatbot
-├── .env.example                  ← Template API key
-├── requirements.txt              ← Daftar library
-├── docs/
-│   ├── GITHUB_ISSUES.md         ← Daftar semua task GitHub
-│   ├── arsitektur.md            ← Dokumentasi arsitektur
-│   └── prompt-engineering-ref.md ← Referensi teknik prompting
-└── experiments/
-    ├── TEMPLATE_EKSPERIMEN.md   ← Panduan eksperimen lengkap
+## 📁 Struktur Folder Proyek
+
+```text
+chatboot/
+├── index.php                 # Halaman utama aplikasi (UI Chatbot)
+├── .env                      # File konfigurasi rahasia (API Key Groq)
+├── .env.example              # Template contoh konfigurasi untuk GitHub
+├── .gitignore                # Mencegah file .env bocor ke Git
+├── README.md                 # Dokumentasi panduan proyek
+│
+├── api/
+│   └── chat.php              # Backend API cURL yang memanggil Groq Cloud
+│
+├── config/
+│   ├── config.php            # Loader file .env & konfigurasi umum
+│   └── prompts.php           # Kumpulan System Prompt 3 mode olahraga
+│
+├── assets/
+│   ├── css/
+│   │   └── style.css         # Desain visual modern & responsif
+│   └── js/
+│       └── app.js            # Interaksi chat real-time & format Markdown
+│
+├── docs/                     # Dokumentasi pengembangan & issue GitHub
+│   ├── GITHUB_ISSUES.md
+│   └── arsitektur.md
+│
+└── experiments/              # Panduan 28 kombinasi prompt engineering
+    ├── TEMPLATE_EKSPERIMEN.md
     └── hasil/
-        ├── workout-prompt-test.md
-        ├── nutrisi-prompt-test.md
-        ├── info-prompt-test.md
         └── analisis-final.md
 ```
 
 ---
 
-## 👥 Tim
-| Nama | Role | Task |
-|------|------|------|
-| Kevin | Admin & Lead Developer | TASK 01,02,03,04,07,08,13,14,19,20 |
-| Teman 1 | Feature Developer | TASK 05,09,10,15,16,21 |
-| Teman 2 | Prompt Engineer & QA | TASK 06,11,12,17,18,22 |
+## 👥 Tim Pengembang
 
----
-
-## 🔗 Links
-- GitHub Project Board: https://github.com/kevinRYOJ/sport-chatbot/projects
-- Live Demo: [akan diisi setelah TASK-22]
-- Google Sheets Eksperimen: [akan diisi setelah TASK-12]
+| Nama | Akun GitHub | Peran Utama |
+|---|---|---|
+| **Kevin** | `kevinRYOJ` | Project Lead & Backend API cURL |
+| **Fernanda** | `fernanda-hensem` | Frontend Developer & UI Styling |
+| **Rico** | `ricozack97` | Prompt Engineer & Quality Assurance |
