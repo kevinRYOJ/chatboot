@@ -57,3 +57,9 @@ Chain of thought (CoT) prompting;4 A dengan 1 B
 input 3147
 output 833
 Deskripsi Kualitas Hasil : Sangat Kontekstual & Terstruktur. Penggunaan Chain of Thought (CoT) dengan konteks spesifik pengguna (mahasiswa penyusun proposal skripsi yang memiliki riwayat bersepeda 5 km) menghasilkan penalaran logis yang mendalam. Model mampu memetakan hubungan antara kebiasaan duduk lama dan kapasitas fisik pengguna, lalu menyajikannya secara terstruktur dalam format daftar periksa (checklist) yang aplikatif.
+
+Task 11
+Action-oriented prompting, Negative prompting;3 A dengan 2 B
+input 3322
+output 608
+Deskripsi Kualitas Hasil :Efisien, Langsung Eksekusi, & Terkunci. Kombinasi action-oriented prompting membuat model langsung memangkas bagian pengantar yang bertele-tele dan berfokus penuh pada tindakan praktis yang harus dilakukan. Di sisi lain, negative prompting berhasil memfilter dan mencegah masuknya instruksi atau gerakan yang tidak diinginkan, menghasilkan output yang sangat padat informasi namun tetap ringkas dan tepat sasaran.
