@@ -1,13 +1,22 @@
 <?php
-
 /**
  * Halaman Utama — All-in-One Sport Chatbot
  * Stack: Native PHP, HTML5, CSS3, Vanilla JS
  */
 
-$config = require __DIR__ . '/config/config.php';
-$appName = htmlspecialchars($config['app_name']);
-$modelName = htmlspecialchars($config['gemini_model']);
+session_start();
+
+// Guard: redirect ke login jika belum login
+if (empty($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+$config   = require __DIR__ . '/config/config.php';
+$appName  = htmlspecialchars($config['app_name']);
+$modelName= htmlspecialchars($config['gemini_model']);
+$username = htmlspecialchars($_SESSION['username']);
+$userInitial = strtoupper(mb_substr($_SESSION['username'], 0, 1));
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -17,7 +26,8 @@ $modelName = htmlspecialchars($config['gemini_model']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $appName; ?> — AI Workout, Nutrisi & Olahraga</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏋️</text></svg>">
+    <link rel="stylesheet" href="assets/css/auth.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏆</text></svg>">
 </head>
 
 <body>
@@ -29,11 +39,21 @@ $modelName = htmlspecialchars($config['gemini_model']);
         <!-- ================= Sidebar ================= -->
         <aside class="sidebar" id="sidebar">
             <div class="brand-section">
-                <div class="brand-icon">🏋️</div>
+                <div class="brand-icon">🏆</div>
                 <div class="brand-text">
                     <h1>SportAI Bot</h1>
                     <span>Fitness & Nutrition</span>
                 </div>
+            </div>
+
+            <!-- User Badge + Logout -->
+            <div class="user-badge" style="margin-top:14px;">
+                <div class="user-badge-avatar"><?= $userInitial ?></div>
+                <div class="user-badge-info">
+                    <div class="user-badge-name"><?= $username ?></div>
+                    <div class="user-badge-label">Member aktif</div>
+                </div>
+                <button class="btn-logout" id="btnLogout" title="Logout">⏏</button>
             </div>
 
             <div class="mode-section">
@@ -50,7 +70,7 @@ $modelName = htmlspecialchars($config['gemini_model']);
 
                     <!-- Mode 2: Nutrisi -->
                     <div class="mode-card" data-mode="nutrisi">
-                        <div class="mode-emoji">🍎</div>
+                        <div class="mode-emoji">🥗</div>
                         <div class="mode-info">
                             <h3>Nutrisi & Diet</h3>
                             <p>Hitung BMR/TDEE, protein harian & meal plan lokal</p>
@@ -59,12 +79,28 @@ $modelName = htmlspecialchars($config['gemini_model']);
 
                     <!-- Mode 3: Info Olahraga -->
                     <div class="mode-card" data-mode="info">
-                        <div class="mode-emoji">⚽</div>
+                        <div class="mode-emoji">🏅</div>
                         <div class="mode-info">
                             <h3>Info Olahraga</h3>
                             <p>Analisis taktik, aturan resmi, & wawasan mental juara</p>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Riwayat Chat -->
+            <div class="history-section">
+                <div class="section-label" style="margin-top:18px;">Riwayat Chat</div>
+
+                <!-- Tombol Chat Baru -->
+                <button class="btn-new-chat" id="btnNewChat">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Chat Baru
+                </button>
+
+                <!-- Daftar riwayat -->
+                <div class="history-list" id="historyList">
+                    <div class="history-empty">Memuat riwayat...</div>
                 </div>
             </div>
 
@@ -123,7 +159,7 @@ $modelName = htmlspecialchars($config['gemini_model']);
                     </button>
                 </form>
                 <div class="input-hint">
-                    Tekan <strong>Enter</strong> untuk kirim • <strong>Shift + Enter</strong> untuk baris baru
+                    Tekan <strong>Enter</strong> untuk kirim &nbsp;·&nbsp; <strong>Shift + Enter</strong> untuk baris baru
                 </div>
             </div>
         </main>
